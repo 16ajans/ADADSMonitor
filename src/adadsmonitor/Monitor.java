@@ -100,7 +100,7 @@ public class Monitor implements ActionListener {
 		ArrayList<String> comp = new ArrayList<String>(queried);
 		comp.removeAll(memory);
 		if (comp.size() > 0) {
-			mon.notify("You've got mail!", String.format("New %s order(s).", hardcopy ? "Hardcopy" : "Ad Hoc"), MessageType.INFO);
+			mon.notify("You've got mail!", String.format("%d new %s order(s).", comp.size(), hardcopy ? "Hardcopy" : "Ad Hoc"), MessageType.INFO);
 		}
 	}
 }
