@@ -27,6 +27,11 @@ public class Monitor implements ActionListener {
 	ArrayList<String> adhocMemory;
 	Boolean hardcopy;
 	
+	private enum MENU_ACTIONS {
+		CLOSE,
+		TOTALS
+	}
+	
 	public static void main(String[] args) {
 
 		Boolean headless = true;
@@ -52,7 +57,14 @@ public class Monitor implements ActionListener {
 		Image image = Toolkit.getDefaultToolkit().createImage(getClass().getResource("icon.png"));
 
 		PopupMenu popup = new PopupMenu();
+		
+		MenuItem totals = new MenuItem("Totals");
+		totals.setActionCommand(MENU_ACTIONS.TOTALS.name());
+		totals.addActionListener(this);
+		popup.add(totals);
+		
 		MenuItem close = new MenuItem("Close");
+		close.setActionCommand(MENU_ACTIONS.CLOSE.name());
 		close.addActionListener(this);
 		popup.add(close);
 
@@ -91,9 +103,13 @@ public class Monitor implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		timer.cancel();
-		link.close();
-		tray.remove(trayIcon);
+		if (e.getActionCommand() == MENU_ACTIONS.CLOSE.name()) {
+			timer.cancel();
+			link.close();
+			tray.remove(trayIcon);
+		} else if (e.getActionCommand() == MENU_ACTIONS.TOTALS.name()) {
+			this.notify("Totals", String.format("Ad Hoc: %d orders\nHardcopy: %d orders", adhocMemory.size(), hcMemory.size()), MessageType.INFO);
+		}
 	}
 
 	static void compare(Monitor mon, Boolean hardcopy, ArrayList<String> queried, ArrayList<String> memory) {
