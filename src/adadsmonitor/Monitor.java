@@ -35,7 +35,7 @@ public class Monitor implements ActionListener {
 	public static void main(String[] args) {
 
 		Boolean headless = true;
-		long delay = 5 * 1000;
+		long delay = 30 * 1000;
 
 		Monitor mon = new Monitor();;
 		try {
